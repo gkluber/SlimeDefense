@@ -10,4 +10,5 @@ Ads.<br>
 Server to host statistics and leaderboard.<br>
 Art.<br>
 Font family.<br>
-3D perspective?
+3D perspective?<br>
+Persistent currency/upgrades?
