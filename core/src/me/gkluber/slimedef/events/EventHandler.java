@@ -1,5 +1,8 @@
 package me.gkluber.slimedef.events;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.input.GestureDetector;
+
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
 import java.lang.reflect.Method;
@@ -20,6 +23,7 @@ public class EventHandler {
 
     public EventHandler()
     {
+        Gdx.input.setInputProcessor(new GestureDetector(new GestureListener(this)));
         listeners = new ArrayList<EListener>(30);
     }
 
@@ -36,7 +40,16 @@ public class EventHandler {
     //TODO: make this more efficient
     public void fire(Event e)
     {
-        Map<Object[], Integer> calls = new HashMap<Object[], Integer>(30);
+        for(int i=0; i<listeners.size(); i++)
+        {
+            if(e instanceof KeyPressEvent)
+                listeners.get(i).onKeyPress((KeyPressEvent) e);
+            else if(e instanceof KeyReleaseEvent)
+                listeners.get(i).onKeyRelease((KeyReleaseEvent) e);
+            else if(e instanceof InteractEvent)
+                listeners.get(i).onInteract((InteractEvent) e);
+        }
+        /*Map<Object[], Integer> calls = new HashMap<Object[], Integer>(30);
 
         for(int i=0; i<listeners.size(); i++)
         {
@@ -78,7 +91,7 @@ public class EventHandler {
                 ex.printStackTrace();
             }
 
-        }
+        }*/
     }
 
     //@returns Method Object at index 0, int priority at index 1

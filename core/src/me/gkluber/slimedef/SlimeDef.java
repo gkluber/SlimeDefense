@@ -3,15 +3,10 @@ package me.gkluber.slimedef;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.*;
 
-import me.gkluber.slimedef.events.EListener;
-import me.gkluber.slimedef.events.EventHandler;
-import me.gkluber.slimedef.events.InteractEvent;
-import me.gkluber.slimedef.events.KeyPressEvent;
-import me.gkluber.slimedef.events.KeyReleaseEvent;
-import me.gkluber.slimedef.events.Listening;
+import me.gkluber.slimedef.events.*;
 import me.gkluber.slimedef.screen.*;
 
 public class SlimeDef extends Game implements EListener {
@@ -52,7 +47,10 @@ public class SlimeDef extends Game implements EListener {
 		eventHandler.registerListener(this);
 
 		float w = Gdx.graphics.getWidth(), h = Gdx.graphics.getHeight();
-		camera = new OrthographicCamera(1, h/w);
+		//camera = new OrthographicCamera(1, h/w);
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, w, h);
+		camera.update();
 
 		batch = new SpriteBatch();
 		img = new Texture(Gdx.files.internal("badlogic.jpg"));
@@ -65,16 +63,18 @@ public class SlimeDef extends Game implements EListener {
 		sprite.setOrigin(sprite.getWidth()/2,sprite.getHeight()/2);
 		sprite.setPosition(-sprite.getWidth()/2, -sprite.getHeight()/2);
 
+		this.setScreen(new LevelPlay(this, "sewers.tmx"));
 	}
 
 	//main loop
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		super.render();
+		/*Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		batch.draw(img, 0, 0);
-		sprite.draw(batch);
+		sprite.draw(batch);*/
 
 		switch(Gdx.app.getType())
 		{
@@ -107,7 +107,7 @@ public class SlimeDef extends Game implements EListener {
 		}
 
 
-		batch.end();
+		//batch.end();
 	}
 	
 	@Override
@@ -135,21 +135,18 @@ public class SlimeDef extends Game implements EListener {
 	}
 
 	//Listener functions
-	@Listening
 	public void onKeyPress(KeyPressEvent e)
 	{
 
 	}
 
-	@Listening
 	public void onKeyRelease(KeyReleaseEvent e)
 	{
 
 	}
 
-	@Listening
 	public void onInteract(InteractEvent e)
 	{
-		System.out.println("Interacted!");
+		System.out.println("Interacted! x: "+e.getX()+" "+e.getY());
 	}
 }

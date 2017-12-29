@@ -18,6 +18,21 @@ public class InteractEvent implements Event{
         this.pos = pos;
     }
 
+    public Vector2 getPos()
+    {
+        return pos;
+    }
+
+    public int getX()
+    {
+        return (int) getPos().x;
+    }
+
+    public int getY()
+    {
+        return (int) getPos().y;
+    }
+
     public int getId()
     {
         return 0;
