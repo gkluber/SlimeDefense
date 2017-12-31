@@ -12,4 +12,6 @@ public interface EListener {
     public void onLongPress(LongPressEvent e);
     public void onPan(PanEvent e);
     public void onTap(TapEvent e);
+    public void onScroll(ScrollEvent e);
+    public void onMouseMove(MouseMoveEvent e);
 }

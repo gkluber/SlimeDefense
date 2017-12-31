@@ -6,8 +6,7 @@ package me.gkluber.slimedef.level;
 
 public enum TileType {
     UNWALKABLE(0),
-    WALKABLE(1),
-    BUILDABLE(2);
+    WALKABLE(1);
 
     private int id;
 

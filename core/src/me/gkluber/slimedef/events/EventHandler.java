@@ -23,7 +23,7 @@ public class EventHandler {
 
     public EventHandler()
     {
-        Gdx.input.setInputProcessor(new GestureDetector(new GestureListener(this)));
+        Gdx.input.setInputProcessor(new InputProcessor(this, new GestureListener(this)));
         listeners = new ArrayList<EListener>(30);
     }
 
@@ -48,6 +48,18 @@ public class EventHandler {
                 listeners.get(i).onKeyRelease((KeyReleaseEvent) e);
             else if(e instanceof InteractEvent)
                 listeners.get(i).onInteract((InteractEvent) e);
+            else if(e instanceof FlingEvent)
+                listeners.get(i).onFling((FlingEvent) e);
+            else if(e instanceof LongPressEvent)
+                listeners.get(i).onLongPress((LongPressEvent) e);
+            else if(e instanceof MouseMoveEvent)
+                listeners.get(i).onMouseMove((MouseMoveEvent) e);
+            else if(e instanceof PanEvent)
+                listeners.get(i).onPan((PanEvent) e);
+            else if(e instanceof ScrollEvent)
+                listeners.get(i).onScroll((ScrollEvent) e);
+            else if(e instanceof TapEvent)
+                listeners.get(i).onTap((TapEvent) e);
         }
         /*Map<Object[], Integer> calls = new HashMap<Object[], Integer>(30);
 

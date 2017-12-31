@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import java.util.Random;
 
+import me.gkluber.slimedef.level.Level;
 import me.gkluber.slimedef.util.Animation;
 import me.gkluber.slimedef.util.ColorUtil;
 
@@ -14,11 +15,16 @@ import me.gkluber.slimedef.util.ColorUtil;
 
 public class Slime extends Damageable {
     private Color color;
-    public Slime(Vector2 pos, double health)
+    private Action last;
+    private Level lvl;
+
+    public Slime(Level lvl, Vector2 pos, double health)
     {
         super(pos, health);
         //90% alpha
         color = ColorUtil.drawColor().sub(0,0,0,0.1f);
+        last = null;
+        this.lvl = lvl;
     }
 
     public boolean damage(double hp)
@@ -36,6 +42,7 @@ public class Slime extends Damageable {
     {
 
     }
+
     public void destroy()
     {
 
@@ -48,6 +55,10 @@ public class Slime extends Damageable {
 
     public boolean act(Action a)
     {
+        if(last==null)
+        {
+
+        }
         return false;
     }
 }

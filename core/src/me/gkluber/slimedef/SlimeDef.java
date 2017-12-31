@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.*;
 import me.gkluber.slimedef.events.*;
 import me.gkluber.slimedef.screen.*;
 
-public class SlimeDef extends Game implements EListener {
+public class SlimeDef extends Game {
 	private OrthographicCamera camera;
 	private Texture img;
 	private Sprite sprite;
@@ -44,7 +44,6 @@ public class SlimeDef extends Game implements EListener {
 
 		interactPos = new Vector2();
 		eventHandler = new EventHandler();
-		eventHandler.registerListener(this);
 
 		float w = Gdx.graphics.getWidth(), h = Gdx.graphics.getHeight();
 		//camera = new OrthographicCamera(1, h/w);
@@ -63,7 +62,10 @@ public class SlimeDef extends Game implements EListener {
 		sprite.setOrigin(sprite.getWidth()/2,sprite.getHeight()/2);
 		sprite.setPosition(-sprite.getWidth()/2, -sprite.getHeight()/2);
 
-		this.setScreen(new LevelPlay(this, "sewers.tmx"));
+
+		playScreen = new LevelPlay(this,"test2.tmx");
+		eventHandler.registerListener(playScreen);
+		this.setScreen(playScreen);
 	}
 
 	//main loop
@@ -75,41 +77,8 @@ public class SlimeDef extends Game implements EListener {
 		batch.begin();
 		batch.draw(img, 0, 0);
 		sprite.draw(batch);*/
-
-		switch(Gdx.app.getType())
-		{
-			case Android:
-				//gets where the user touched
-				if(Gdx.input.justTouched())
-				{
-					System.out.println("touched");
-					interactPos.set(Gdx.input.getX(),Gdx.input.getY());
-					eventHandler.fire(new InteractEvent(interactPos));
-				}
-
-				break;
-			case Desktop:
-				if(Gdx.input.justTouched())
-				{
-					System.out.println("clicked");
-					interactPos.set(Gdx.input.getX(),Gdx.input.getY());
-					eventHandler.fire(new InteractEvent(interactPos));
-				}
-				break;
-			case WebGL:
-				if(Gdx.input.justTouched())
-				{
-					System.out.println("clicked");
-					interactPos.set(Gdx.input.getX(),Gdx.input.getY());
-					eventHandler.fire(new InteractEvent(interactPos));
-				}
-				break;
-		}
-
-
-		//batch.end();
 	}
-	
+
 	@Override
 	public void dispose () {
 		batch.dispose();
@@ -134,19 +103,8 @@ public class SlimeDef extends Game implements EListener {
 
 	}
 
-	//Listener functions
-	public void onKeyPress(KeyPressEvent e)
+	public SpriteBatch getBatch()
 	{
-
-	}
-
-	public void onKeyRelease(KeyReleaseEvent e)
-	{
-
-	}
-
-	public void onInteract(InteractEvent e)
-	{
-		System.out.println("Interacted! x: "+e.getX()+" "+e.getY());
+		return batch;
 	}
 }
