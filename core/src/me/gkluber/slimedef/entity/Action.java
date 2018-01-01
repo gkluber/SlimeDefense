@@ -59,4 +59,9 @@ public enum Action {
         return Action.values()[id];
     }
 
+    public static Action getAntipodal(Action a)
+    {
+        return Action.getAction((a.getId() + 2) % 4);
+    }
+
 }

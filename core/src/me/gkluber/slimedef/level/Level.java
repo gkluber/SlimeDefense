@@ -93,6 +93,18 @@ public class Level {
 
     public TiledMapTileLayer.Cell getCell(int x, int y)
     {
-        return this.mainLayer.getCell(x,y);
+        return x < widthTiles && y < heightTiles ? this.mainLayer.getCell(x,y) : null;
+    }
+
+    //may return null values
+    //each index corresponds to Action enum id
+    public TiledMapTileLayer.Cell[] getCellNeighbors(int x, int y)
+    {
+        return new TiledMapTileLayer.Cell[]{
+                getCell(x, y + 1),
+                getCell(x - 1, y ),
+                getCell(x, y - 1),
+                getCell(x + 1, y)
+        };
     }
 }
