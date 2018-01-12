@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 
 import net.dermetfan.gdx.physics.box2d.PositionController;
 
@@ -23,11 +24,20 @@ public class Level {
     //TiledMapTileSet holds tiles
     //StaticTiledMapTile for map underneath -> AnimatedTileMapTile for above?
 
+    /*
+    Custom MapProperties:
+    startingPosX
+    startingPosY
+    configFile (contains info about waves and rewards and etc.)
+     */
+
     private TiledMap map;
     private MapProperties props;
     private TiledMapTileLayer mainLayer;
 
-    private int widthTiles, heightTiles, tileWidth, tileHeight, width, height;
+    private int widthTiles, heightTiles, tileWidth, tileHeight, width, height, startingPosX, startingPosY;
+
+    private Vector2 startingPos;
 
     public Level(String str)
     {
@@ -40,6 +50,14 @@ public class Level {
         //dimensions of each tile
         tileWidth = props.get("tilewidth", Integer.class);
         tileHeight = props.get("tileheight", Integer.class);
+
+        Integer objPosX = props.get("startingPosX", Integer.class);
+        startingPosX = objPosX==null?0:objPosX;
+
+        Integer objPosY = props.get("startingPosY", Integer.class);
+        startingPosY = objPosY==null?0:objPosY;
+
+        startingPos = new Vector2(startingPosX, startingPosY);
 
         width = widthTiles * tileWidth;
         height = heightTiles * tileHeight;
@@ -90,6 +108,8 @@ public class Level {
     {
         map.dispose();
     }
+
+    public Vector2 getStartingPos(){ return startingPos; }
 
     public TiledMapTileLayer.Cell getCell(int x, int y)
     {

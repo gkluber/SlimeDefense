@@ -1,6 +1,7 @@
 package me.gkluber.slimedef.entity;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 
@@ -11,6 +12,7 @@ import java.util.Random;
 import me.gkluber.slimedef.level.Level;
 import me.gkluber.slimedef.level.TileType;
 import me.gkluber.slimedef.util.Animation;
+import me.gkluber.slimedef.util.AnimationType;
 import me.gkluber.slimedef.util.ColorUtil;
 
 /**
@@ -23,6 +25,8 @@ public class Slime extends Damageable {
     private Level lvl;
     private List<Action> possibilities;
     private Random rand;
+    private Animation moveAnimation;
+    private Animation damageAnimation;
     private static final Action[] possibleActions = new Action[]{
         Action.MOVE_UP, Action.MOVE_LEFT, Action.MOVE_DOWN, Action.MOVE_RIGHT, Action.PAUSE
     };
@@ -36,18 +40,34 @@ public class Slime extends Damageable {
         this.lvl = lvl;
         possibilities = new ArrayList<Action>(5);
         rand = new Random();
+        moveAnimation = new Animation(AnimationType.MOVING, 60);
+        damageAnimation = new Animation(AnimationType.DAMAGED, 20);
     }
 
     public boolean damage(double hp)
     {
         health -= hp;
+        playAnimation(damageAnimation);
         return health > 0;
     }
 
-    public void draw()
+    public void draw(ShapeRenderer renderer)
     {
-
+        renderer.begin(ShapeRenderer.ShapeType.Filled);
+        renderer.setColor(color);
+        if(!moveAnimation.isDone())
+        {
+            pos.y += moveAnimation.getFrame()>30?-1:1;
+            moveAnimation.tick();
+        }
+        if(damageAnimation.isDone())
+        {
+            color.add(Color.RED);
+        }
+        renderer.circle(pos.x, pos.y, (float)Math.sqrt(getHealth()));
+        renderer.end();
     }
+
 
     public void move(Vector2 target)
     {
@@ -61,11 +81,15 @@ public class Slime extends Damageable {
 
     public void playAnimation(Animation an)
     {
-
+        an.reset();
     }
 
     public boolean act(Action a)
     {
+        if(a==Action.PAUSE)
+            return true; //change nothing
+
+        playAnimation(moveAnimation);
 
         return false;
     }
@@ -82,7 +106,7 @@ public class Slime extends Damageable {
         }
         else
         {
-            TiledMapTileLayer.Cell[] neighbors = lvl.getCellNeighbors((int)pos.x, (int)pos.y);
+            TiledMapTileLayer.Cell[] neighbors = lvl.getCellNeighbors((int)pos.x/lvl.getTileWidth(), (int)pos.y/lvl.getTileHeight());
             Action anti = Action.getAntipodal(last);
             neighbors[anti.getId()] = null;
             for(Action a : possibleActions)

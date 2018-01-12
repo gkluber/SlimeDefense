@@ -1,5 +1,6 @@
 package me.gkluber.slimedef.entity;
 
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.HashSet;
@@ -51,7 +52,7 @@ public abstract class Entity {
         return animations;
     }
 
-    public abstract void draw();
+    public abstract void draw(ShapeRenderer renderer);
     public abstract void move(Vector2 target);
     public abstract void destroy();
     public abstract boolean act(Action a); //returns false if cannot act

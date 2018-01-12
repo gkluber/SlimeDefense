@@ -47,7 +47,7 @@ public class LevelPlay implements Screen, EListener {
         this.main = main;
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.setToOrtho(false, Gdx.graphics.getWidth()*2, Gdx.graphics.getHeight()*2);
         cameraVelocity = new Vector3();
 
         lvl = new Level(level);
@@ -93,9 +93,9 @@ public class LevelPlay implements Screen, EListener {
         SpriteBatch batch = main.getBatch();
         batch.setProjectionMatrix(camera.combined);
 
-        batch.begin();
+        //batch.begin();
 
-        batch.draw
+        //batch.draw
 
 
         renderer.setView(camera);
