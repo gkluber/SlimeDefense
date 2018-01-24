@@ -35,6 +35,10 @@ public abstract class Entity {
         return pos;
     }
 
+    public void setPosition(Vector2 v){
+        this.pos = v;
+    }
+
     public abstract void playAnimation(Animation an);
 
     protected void startAnimation(Animation an)
@@ -53,7 +57,7 @@ public abstract class Entity {
     }
 
     public abstract void draw(ShapeRenderer renderer);
-    public abstract void move(Vector2 target);
+    public abstract void move(Vector2 target); //uses animation, etc. to move
     public abstract void destroy();
     public abstract boolean act(Action a); //returns false if cannot act
 }

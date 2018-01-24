@@ -20,6 +20,8 @@ public abstract class Damageable extends Entity{
         return health;
     }
 
+    public void setHealth(double health) { this.health = health; }
+
     public boolean isAlive()
     {
         return health > 0;

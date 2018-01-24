@@ -19,4 +19,6 @@ public enum TileType {
     {
         return id;
     }
+
+    public static TileType getType(int id){ return TileType.values()[id];}
 }

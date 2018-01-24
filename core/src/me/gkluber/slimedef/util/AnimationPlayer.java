@@ -24,9 +24,9 @@ class AnimationRunnable implements Runnable
     @Override
     public void run()
     {
-        while(EntitySystem.animating)
+        /*while(EntitySystem.animating)
         {
 
-        }
+        }*/
     }
 }

@@ -3,6 +3,7 @@ package me.gkluber.slimedef.level;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
@@ -74,6 +75,7 @@ public class Level {
         return map;
     }
 
+
     public int getWidthTiles()
     {
         return widthTiles;
@@ -115,6 +117,21 @@ public class Level {
     {
         return x < widthTiles && y < heightTiles ? this.mainLayer.getCell(x,y) : null;
     }
+
+    /*public boolean isTileOccupied(int x, int y)
+    {
+        return this.mainLayer.getCell(x,y).getTile().getId()>1;
+    }
+
+    //code for when the tower occupies the tile
+    public boolean occupyTile(int x, int y)
+    {
+        if(isTileOccupied(x,y))
+            return false;
+        //this.mainLayer.getCell(x,y).setTile();
+        //this.mainLayer.set
+        return true;
+    }*/
 
     //may return null values
     //each index corresponds to Action enum id

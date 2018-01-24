@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import me.gkluber.slimedef.entity.Damageable;
 import me.gkluber.slimedef.entity.Entity;
 import me.gkluber.slimedef.util.Animation;
 
@@ -21,7 +22,7 @@ public class EntitySystem {
 
     public EntitySystem()
     {
-        entityCap = 30;
+        entityCap = 500;
         entities = new Entity[entityCap];
     }
 
@@ -29,6 +30,42 @@ public class EntitySystem {
     {
         this.entityCap = entityCap;
         entities = new Entity[entityCap];
+    }
+
+    public boolean registerEntity(Entity e)
+    {
+        if(isCapped()) //attempt to recycle old entities
+        {
+            return recycle(e);
+        }
+        return true; //todo
+    }
+
+    public boolean recycle(Entity e)
+    {
+        for(Entity en : entities)
+        {
+            if(e instanceof Damageable && en instanceof Damageable)
+            {
+                //respawn entity and move location
+                Damageable target = (Damageable) en;
+                Damageable subject = (Damageable) e;
+                target.setHealth(subject.getHealth());
+                target.setPosition(subject.getPosition());
+            }
+        }
+        return true; //todo
+
+    }
+
+    private int nextIndex()
+    {
+        return emptyIndex++;
+    }
+
+    private boolean isCapped()
+    {
+        return emptyIndex>=entityCap;
     }
 
     public void drawEntities(ShapeRenderer renderer)

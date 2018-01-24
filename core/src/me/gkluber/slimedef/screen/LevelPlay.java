@@ -162,6 +162,8 @@ public class LevelPlay implements Screen, EListener {
     @Override
     public void onTap(TapEvent e)
     {
+        System.out.println("screen: "+e.getX()+" "+e.getY());
+        System.out.println("map: "+(this.camera.position.x+e.getX()-camera.viewportWidth/2)+" "+(this.camera.position.y+e.getY()-camera.viewportHeight/2));
 
     }
 

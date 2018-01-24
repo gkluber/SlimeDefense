@@ -1,5 +1,6 @@
 package me.gkluber.slimedef.entity;
 
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
 import me.gkluber.slimedef.util.Animation;
@@ -15,9 +16,9 @@ public class Gem extends Entity{
         super(pos);
     }
 
-    public void draw()
+    public void draw(ShapeRenderer renderer)
     {
-
+        
     }
 
     public void destroy()
